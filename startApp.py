@@ -38,6 +38,8 @@ class main():
     def login(self):
         db = sqlite3.connect('project.db')
         cur = db.cursor()
+        active_true = """Update User set active = 0 where active=1"""
+        cur.execute(active_true)
         get_user = ("SELECT * FROM User WHERE username = ? AND password = ?")
         cur.execute(get_user, [(self.username.get()),(self.password.get())])
         user_details = cur.fetchall()
@@ -54,6 +56,8 @@ class main():
     def create_new_user(self):
         db = sqlite3.connect('project.db')
         cur = db.cursor()
+        active_true = """Update User set active = 0 where active=1"""
+        cur.execute(active_true)
         cur.execute("SELECT username from User")
         records = cur.fetchall()
         #print(records)

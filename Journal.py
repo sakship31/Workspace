@@ -159,7 +159,7 @@ class ViewEntries(tk.Frame):
         titles=cur.fetchall()
         for title1 in titles:
             list1.append(title1)
-        print(list1)
+#        print(list1)
         self.update_view(list1,list_box)
         db.commit()
         db.close()
@@ -168,8 +168,8 @@ class ViewEntries(tk.Frame):
         # delete_entry_btn.grid(row=0,column=2,padx=2)
 
     def update_view(self,list1,list_box):
- #       global list1
-        print(list1)
+#       global list1
+#      print(list1)
         for entry in list1:
             list_box.insert("end",entry)
 
