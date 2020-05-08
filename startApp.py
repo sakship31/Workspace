@@ -20,7 +20,8 @@ cur.execute(""" CREATE TABLE IF NOT EXISTS User (
 """)
 
 cur.execute("SELECT * FROM User")
-
+x = cur.fetchall()
+print(x)
 db.commit()
 db.close()
 
@@ -55,7 +56,7 @@ class main():
         cur = db.cursor()
         cur.execute("SELECT username from User")
         records = cur.fetchall()
-#        print(records)
+        #print(records)
         flag=0
         for r in records:
             if r[0]==self.new_username.get():
@@ -95,7 +96,7 @@ class main():
         Button(self.crf,text = 'Go to Login',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.log).grid(row=2,column=1)
 
         self.menu = Frame(self.master,padx =10,pady = 10)
-        Button(self.menu,text = 'Diary',bd = 5 ,font = ('',12),padx=8,pady=3).grid(row=0,column=0)
+        Button(self.menu,text = 'Journal',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.journal).grid(row=0,column=0)
         Button(self.menu,text = 'Paint',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.paint).grid(row=0,column=1)
         Button(self.menu,text = 'Notepad',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.notepad).grid(row=0,column=2)
 
@@ -109,12 +110,16 @@ class main():
         root.destroy()
         call(["python", "Paint.py"])
 
-    def diary(self):
+    def journal(self):
         global root
+        db = sqlite3.connect('project.db')
+        cur = db.cursor()
         active_true = """Update User set active = 1 where username=? AND password=?"""
         cur.execute(active_true,[(self.username.get()),(self.password.get())])
+        db.commit()
+        db.close()
         root.destroy()
-        call(["python", "Diary.py"])
+        call(["python", "Journal.py"])
 
     def log(self):
         self.username.set('')
