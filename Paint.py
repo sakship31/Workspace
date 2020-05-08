@@ -1,30 +1,45 @@
 from tkinter import *
+import PIL
+from PIL import Image, ImageGrab, ImageTk, ImageDraw
 from tkinter.colorchooser import askcolor
+from tkinter.filedialog import askopenfile,asksaveasfilename
+import io
+import os
+
+
+
+
 class Paint(object):
     DEFAULT_PEN_SIZE = 5.0
     DEFAULT_COLOR = 'black'
    
     def __init__(self):
         self.root = Tk()
+        self.root.title("Paint")
+        self.save_button = Button(self.root,text = 'Save File', command = self.save_file)
+        self.save_button.grid(row=0,column=0)
+
+        self.pen_button = Button(self.root,text = 'Clear Screen',command = self.clear_scr)
+        self.pen_button.grid(row=0,column=1)
        
-        self.pen_button = Button(self.root,text = 'pen',command = self.use_pen)
-        self.pen_button.grid(row=0,column=0)
+        self.brush_button = Button(self.root,text = 'Brush',command = self.use_brush)
+        self.brush_button.grid(row=0,column=2)
        
-        self.brush_button = Button(self.root,text = 'brush',command = self.use_brush)
-        self.brush_button.grid(row=0,column=1)
+        self.color_button = Button(self.root,text = 'Color',command = self.choose_color)
+        self.color_button.grid(row=0,column=3)
        
-        self.color_button = Button(self.root,text = 'color',command = self.choose_color)
-        self.color_button.grid(row=0,column=2)
+        self.eraser_button = Button(self.root,text = 'Eraser',command = self.use_eraser)
+        self.eraser_button.grid(row=0,column=4)
        
-        self.eraser_button = Button(self.root,text = 'eraser',command = self.use_eraser)
-        self.eraser_button.grid(row=0,column=3)
-       
-        self.choose_size_button = Scale(self.root,from_=1,to=10,orient = HORIZONTAL)
-        self.choose_size_button.grid(row=0,column=4)
+        self.choose_size_button = Scale(self.root,from_=1,to=25,orient = HORIZONTAL, sliderlength = 25)
+        self.choose_size_button.grid(row=0,column=5)
        
         self.c = Canvas(self.root,bg = 'white',width=600,height=600)
-        self.c.grid(row =1,columnspan = 5)
+        self.c.grid(row =1,columnspan = 6)
        
+        self.image=Image.new("RGB",(200,200),(255,255,255))
+        self.draw=ImageDraw.Draw(self.image)
+
         self.setup()
         self.root.mainloop()
        
@@ -38,11 +53,12 @@ class Paint(object):
         self.c.bind('<B1-Motion>',self.paint)
         self.c.bind('<ButtonRelease-1>',self.reset)
        
-    def use_pen(self):
-        self.activate_button(self.pen_button)
+    def clear_scr(self):
+        self.c.delete("all")
        
     def use_brush(self):
         self.activate_button(self.brush_button)
+        
        
     def choose_color(self):
         self.eraser_on = False
@@ -67,7 +83,18 @@ class Paint(object):
    
     def reset(self,event):
         self.old_x,self.old_y = None,None
-       
+
+
+
+    def save_file(self):
+        fileName =asksaveasfilename(title="Save",filetypes=[('image files','*.png')],defaultextension = [('image files','*.png')])
+        fName = fileName[0:(len(fileName)-4)]
+        fName = fName + ".eps"
+        self.c.postscript(file=fName)
+        img = Image.open(fName)
+        img.save(fileName, "png")
+        
 
 if __name__ == '__main__':
     Paint()
+
