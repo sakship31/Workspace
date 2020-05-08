@@ -132,8 +132,8 @@ class ViewEntries(tk.Frame):
         edit_entry_btn=ttk.Button(change_label,width=10,text="Edit")
         edit_entry_btn.grid(row=0,column=1,padx=2)
 
-        delete_entry_btn=ttk.Button(change_label,width=10,text="Delete")
-        delete_entry_btn.grid(row=0,column=2,padx=2)
+        # delete_entry_btn=ttk.Button(change_label,width=10,text="Delete")
+        # delete_entry_btn.grid(row=0,column=2,padx=2)
 
         logout_btn=ttk.Button(change_label,width=10,text="Log Out",command=self.logout)
         logout_btn.grid(row=0,column=3,padx=2)
@@ -160,16 +160,20 @@ class ViewEntries(tk.Frame):
         for title1 in titles:
             list1.append(title1)
 #        print(list1)
+        # cur.execute("SELECT * from Journal")
+        # records = cur.fetchall()
+        # print(records)
         self.update_view(list1,list_box)
+        cur.execute("SELECT * from Journal")
+        records = cur.fetchall()
+        print(records)
         db.commit()
         db.close()
 
-        # delete_entry_btn=ttk.Button(change_label,width=10,text="Delete",command=self.delete(list_box,list1))
-        # delete_entry_btn.grid(row=0,column=2,padx=2)
+        delete_entry_btn=ttk.Button(change_label,width=10,text="Delete",command=self.delete(list_box))
+        delete_entry_btn.grid(row=0,column=2,padx=2)
 
     def update_view(self,list1,list_box):
-#       global list1
-#      print(list1)
         for entry in list1:
             list_box.insert("end",entry)
 
@@ -184,21 +188,20 @@ class ViewEntries(tk.Frame):
         root.destroy()
         call(["python", "startApp.py"])
     
-
-#     def delete(self,list_box,list1):
-#  #       global list1
-#         del_title=list_box.get("active")
-#         if del_title in list1:
-#             list1.remove(del_title)
-#             db = sqlite3.connect('project.db')
-#             cur = db.cursor()
-#             cur.execute("SELECT id FROM User WHERE active = 1 ")
-#             activeid = cur.fetchall()
-#             act = activeid[0]
-#             del_entry=("DELETE FROM Journal WHERE title=?")
-#             cur.execute(del_entry,del_title)
-#             db.commit()
-#             db.close()
+    def delete(self,list_box):
+  #     pass
+        del_title=list_box.get("active")
+        if del_title:
+            # list1.remove(del_title)
+            db = sqlite3.connect('project.db')
+            cur = db.cursor()
+            cur.execute("SELECT id FROM User WHERE active = 1 ")
+            activeid = cur.fetchall()
+            act = activeid[0]
+            del_entry=("DELETE FROM Journal WHERE title=?")
+            cur.execute(del_entry,del_title)
+            db.commit()
+            db.close()
 
 
 root = JournalApp()
