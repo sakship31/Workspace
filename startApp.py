@@ -21,7 +21,7 @@ cur.execute(""" CREATE TABLE IF NOT EXISTS User (
 
 cur.execute("SELECT * FROM User")
 x = cur.fetchall()
-print(x)
+# print(x)
 db.commit()
 db.close()
 

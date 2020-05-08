@@ -11,7 +11,7 @@ from subprocess import call
 #Add Images
 db = sqlite3.connect('project.db')
 cur = db.cursor()
-#cur.execute("DROP TABLE Journal")
+# cur.execute("DROP TABLE Journal")
 cur.execute(""" CREATE TABLE IF NOT EXISTS Journal (
     title text NOT NULL,
     content text NOT NULL,
@@ -111,6 +111,7 @@ class AddEntry(tk.Frame):
         print(records)
         db.commit()
         db.close()
+        # controller.show_frame(ViewEntries)
     
 
 
@@ -118,14 +119,89 @@ class AddEntry(tk.Frame):
 class ViewEntries(tk.Frame):
     def __init__(self,parent,controller):
         tk.Frame.__init__(self,parent)
-        add_label = tk.Label(self, text = "Your Journal Entries", font = ('Arial',20))
-        add_label.pack(pady=10,padx=10)
-        add_button = tk.Button(self, text = "Add New Entry", command=lambda: controller.show_frame(AddEntry))
-        add_button.pack()
 
+        add_label = tk.Label(self, text = "Your Journal Entries", font = ('Arial',10))
+        add_label.pack(pady=10,padx=10)
+
+        change_label=ttk.Label(self)
+        change_label.pack(side=tk.TOP,fill=tk.X)
+
+        add_entry_btn=ttk.Button(change_label,width=10,text="Add",command=lambda: controller.show_frame(AddEntry))
+        add_entry_btn.grid(row=0,column=0,padx=2)
+
+        edit_entry_btn=ttk.Button(change_label,width=10,text="Edit")
+        edit_entry_btn.grid(row=0,column=1,padx=2)
+
+        delete_entry_btn=ttk.Button(change_label,width=10,text="Delete")
+        delete_entry_btn.grid(row=0,column=2,padx=2)
+
+        logout_btn=ttk.Button(change_label,width=10,text="Log Out",command=self.logout)
+        logout_btn.grid(row=0,column=3,padx=2)
+
+        space=ttk.Label(self,text="",background="white")
+
+        scroll_bar=tk.Scrollbar(self)
+        list_box=tk.Listbox(self)
+        scroll_bar.pack(side=tk.RIGHT,fill=tk.Y)
+        list_box.pack(fill=tk.BOTH,expand=True)
+        scroll_bar.config(command=list_box.yview)
+        list_box.config(yscrollcommand=scroll_bar.set)
+        list1=[]
+        db = sqlite3.connect('project.db')
+        cur = db.cursor()
+        cur.execute("SELECT id FROM User WHERE active = 1 ")
+        activeid = cur.fetchall()
+        act = activeid[0]
+        # print(activeid)
+        # print(act)
+        get_title=("SELECT title FROM Journal WHERE userid = ? ")
+        cur.execute(get_title,act)
+        titles=cur.fetchall()
+        for title1 in titles:
+            list1.append(title1)
+        print(list1)
+        self.update_view(list1,list_box)
+        db.commit()
+        db.close()
+
+        # delete_entry_btn=ttk.Button(change_label,width=10,text="Delete",command=self.delete(list_box,list1))
+        # delete_entry_btn.grid(row=0,column=2,padx=2)
+
+    def update_view(self,list1,list_box):
+ #       global list1
+        print(list1)
+        for entry in list1:
+            list_box.insert("end",entry)
+
+    def logout(self):
+        db = sqlite3.connect('project.db')
+        cur = db.cursor()
+        active_true = """Update User set active = 0 where active = 1"""
+        cur.execute(active_true)
+        db.commit()
+        db.close()
+        global root
+        root.destroy()
+        call(["python", "startApp.py"])
+    
+
+#     def delete(self,list_box,list1):
+#  #       global list1
+#         del_title=list_box.get("active")
+#         if del_title in list1:
+#             list1.remove(del_title)
+#             db = sqlite3.connect('project.db')
+#             cur = db.cursor()
+#             cur.execute("SELECT id FROM User WHERE active = 1 ")
+#             activeid = cur.fetchall()
+#             act = activeid[0]
+#             del_entry=("DELETE FROM Journal WHERE title=?")
+#             cur.execute(del_entry,del_title)
+#             db.commit()
+#             db.close()
 
 
 root = JournalApp()
-root.title("MyJournal")
+root.title("Journal")
 root.geometry("500x500")
 root.mainloop()
