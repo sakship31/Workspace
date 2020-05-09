@@ -7,8 +7,6 @@ import io
 import os
 
 
-
-
 class Paint(object):
     DEFAULT_PEN_SIZE = 5.0
     DEFAULT_COLOR = 'black'
