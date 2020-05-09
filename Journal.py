@@ -6,6 +6,9 @@ from tkinter import messagebox as ms
 from datetime import datetime
 import os
 from subprocess import call
+from tkinter import Tk, Text, TOP, BOTH, X, N, LEFT, RIGHT
+from tkinter.ttk import Frame, Label, Entry, Button
+
 
 #Add, Edit, Delete Entries
 #Add Images
@@ -111,6 +114,9 @@ class AddEntry(tk.Frame):
         print(records)
         db.commit()
         db.close()
+        global root
+        root.destroy()
+        call(["python", "Journal.py"])
        # controller.show_frame(ViewEntries)
     
 
@@ -120,7 +126,7 @@ class ViewEntries(tk.Frame):
     # list1=[]
     def __init__(self,parent,controller):
         tk.Frame.__init__(self,parent)
-        print("heyyyyy")
+        
         add_label = tk.Label(self, text = "Your Journal Entries", font = ('Arial',10))
         add_label.pack(pady=10,padx=10)
 
@@ -130,7 +136,7 @@ class ViewEntries(tk.Frame):
         add_entry_btn=ttk.Button(change_label,width=10,text="Add",command=lambda: controller.show_frame(AddEntry))
         add_entry_btn.grid(row=0,column=0,padx=2)
 
-        edit_entry_btn=ttk.Button(change_label,width=10,text="Edit")
+        edit_entry_btn=ttk.Button(change_label,width=10,text="Edit", command=lambda: self.update(list_box,list1))
         edit_entry_btn.grid(row=0,column=1,padx=2)
 
         # delete_entry_btn=ttk.Button(change_label,width=10,text="Delete")
@@ -225,7 +231,84 @@ class ViewEntries(tk.Frame):
             db.commit()
             db.close()
 
+
+    def update(self, list_box,list1):
+        upd_title_index=list_box.curselection()
+        upd_title=list1[upd_title_index[0]]
+        print(upd_title)
+        db = sqlite3.connect('project.db')
+        cur = db.cursor()
+        upd_entry=("SELECT * FROM Journal WHERE title=?")
+        cur.execute(upd_entry,(upd_title,))
+        entries = cur.fetchall()
+        print(entries)
+        entry_list = entries[0]
+        #create separate dialog box
+        
+        db.commit()
+        db.close()
+        onClick(entry_list)
+        global root
+        root.destroy()
+        call(["python", "Journal.py"])
+    
+
+class MyDialog:
+    def __init__(self, parent, entry_list):
+        top = self.top = tk.Toplevel(parent)
+        self.entry_list = entry_list
+        add_label = tk.Label(top, text = "Edit Entry", font = ('Arial',16))
+        add_label.pack(pady=10,padx=10)
+    
+        self.myLabel = tk.Label(top, text='Title: ')
+        self.myLabel.pack()
+
+        self.title = tk.Text(top, height=1, width=55)
+        self.title.insert(END,entry_list[0])
+        self.title.pack()
+
+        self.myLabel = tk.Label(top, text='Entry: ')
+        self.myLabel.pack()
+
+        self.entry = tk.Text(top, height=18, width=55)
+        self.entry.insert(END,entry_list[1])
+        scroll = ttk.Scrollbar(top)
+        self.entry.place(x = 15, y = 170)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        scroll.config(command=self.entry.yview)
+        self.entry.config(yscrollcommand=scroll.set)
+        self.entry.pack()
+        self.mySubmitButton = tk.Button(top, text='Submit', command=self.edit_data)
+        self.mySubmitButton.pack()
+
+    def edit_data(self):
+        db = sqlite3.connect('project.db')
+        cur = db.cursor()
+        title_data = self.title.get("1.0","end")
+        entry_data = self.entry.get("1.0","end")
+        print(title_data, entry_data)
+        now = datetime.now()
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        add_details = 'UPDATE Journal set title=?,content=?,datetime=?,userid=? WHERE entryid = ?'
+        cur.execute(add_details, [(title_data),(entry_data),(dt_string),(self.entry_list[3]),(self.entry_list[4])])
+        cur.execute("SELECT * from Journal")
+        records = cur.fetchall()
+        print(records)
+        db.commit()
+        db.close()
+        #print(self.entry_list)
+        self.top.destroy()
+
+def onClick(entry_list):
+    inputDialog = MyDialog(root,entry_list)
+    root.wait_window(inputDialog.top)
+    #print(entry_list)
+
+
 root = JournalApp()
+#username = 'Empty'
+#mainButton = tk.Button(root, text='Click me', command=onClick)
+#mainButton.pack()
 root.title("Journal")
 root.geometry("500x500")
 root.mainloop()
