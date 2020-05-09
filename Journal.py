@@ -155,16 +155,19 @@ class ViewEntries(tk.Frame):
         act = activeid[0]
         # print(activeid)
         # print(act)
-        get_title=("SELECT title,content,datetime FROM Journal WHERE userid = ? ")
+        get_title=("SELECT entryid,title,content,datetime FROM Journal WHERE userid = ? ")
         cur.execute(get_title,act)
         titles=cur.fetchall()
-        i=0
         print(titles)
         for title1 in titles:
-            list1.append(title1[0])
-            list1.append(title1[1])
-            list1.append(title1[2])
-            i+=1
+            list2=[]
+            for i in range(4):
+                list2.append(title1[0])
+                list2.append(title1[1])
+                list2.append(title1[2])
+                list2.append(title1[3])
+            list1.append(list2)
+
  #      print(list1)
         cur.execute("SELECT * from Journal")
         records = cur.fetchall()
@@ -181,8 +184,14 @@ class ViewEntries(tk.Frame):
         delete_entry_btn.grid(row=0,column=2,padx=2)
 
     def update_view(self,list1,list_box):
+        i=1
         for entry in list1:
-            list_box.insert("end",entry)
+            x="Entry "+str(i)
+            list_box.insert("end",x)
+            list_box.insert("end",entry[1])
+            list_box.insert("end",entry[2])
+            list_box.insert("end",entry[3]) 
+            i+=1           
 
     def logout(self):
         db = sqlite3.connect('project.db')
@@ -201,17 +210,24 @@ class ViewEntries(tk.Frame):
         # del_title=int(del_title)
         print("sjdsjdsjdhsjh")
         print(del_title_index)
-        del_title=list1[del_title_index[0]]
+        del_title_index1=del_title_index[0]%4
+        del_title=list1[del_title_index1][0]
         print(del_title)
+        # del_title1=del_title.split()
+        # print(del_title1)
         tup1=()
         tup2=()
+        tup3=()
         tup1=tup1+(del_title_index[0]+1,)
-        tup2=tup2+((del_title_index[0]+2),) 
-        print(tup1)
+        tup2=tup2+((del_title_index[0]+2),)
+        tup3=tup3+((del_title_index[0]+3),) 
+        print(tup1) 
         print(tup2)
-        print(len(del_title))
-        print(len((del_title,)))
+        print(tup3)
+        # print(len(del_title))
+        # print(len((del_title,)))
         if del_title_index:
+            list_box.delete(tup3)
             list_box.delete(tup2)
             list_box.delete(tup1)
             list_box.delete(del_title_index)            
@@ -220,7 +236,7 @@ class ViewEntries(tk.Frame):
             cur.execute("SELECT id FROM User WHERE active = 1 ")
             activeid = cur.fetchall()
             act = activeid[0]
-            del_entry=("DELETE FROM Journal WHERE title=?")
+            del_entry=("DELETE FROM Journal WHERE entryid=?")
             cur.execute(del_entry,(del_title,))
             db.commit()
             db.close()
