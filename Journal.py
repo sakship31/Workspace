@@ -111,12 +111,13 @@ class AddEntry(tk.Frame):
         print(records)
         db.commit()
         db.close()
-        # controller.show_frame(ViewEntries)
+       # controller.show_frame(ViewEntries)
     
 
 
 
 class ViewEntries(tk.Frame):
+    # list1=[]
     def __init__(self,parent,controller):
         tk.Frame.__init__(self,parent)
 
@@ -170,7 +171,7 @@ class ViewEntries(tk.Frame):
         db.commit()
         db.close()
 
-        delete_entry_btn=ttk.Button(change_label,width=10,text="Delete",command=self.delete(list_box))
+        delete_entry_btn=ttk.Button(change_label,width=10,text="Delete",command=lambda: self.delete(list_box,list1))
         delete_entry_btn.grid(row=0,column=2,padx=2)
 
     def update_view(self,list1,list_box):
@@ -187,12 +188,17 @@ class ViewEntries(tk.Frame):
         global root
         root.destroy()
         call(["python", "startApp.py"])
-    
-    def delete(self,list_box):
-  #     pass
-        del_title=list_box.get("active")
-        if del_title:
+
+    def delete(self,list_box,list1):
+#        pass
+        del_title_index=list_box.curselection()
+        # del_title=int(del_title)
+        print("sjdsjdsjdhsjh")
+        print(del_title_index)
+        del_title=list1[del_title_index[0]]
+        if del_title_index:
             # list1.remove(del_title)
+            list_box.delete(del_title_index)
             db = sqlite3.connect('project.db')
             cur = db.cursor()
             cur.execute("SELECT id FROM User WHERE active = 1 ")
@@ -202,7 +208,6 @@ class ViewEntries(tk.Frame):
             cur.execute(del_entry,del_title)
             db.commit()
             db.close()
-
 
 root = JournalApp()
 root.title("Journal")
