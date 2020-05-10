@@ -10,11 +10,9 @@ from tkinter import Tk, Text, TOP, BOTH, X, N, LEFT, RIGHT
 from tkinter.ttk import Frame, Label, Entry, Button
 
 
-#Add, Edit, Delete Entries
-#Add Images
 db = sqlite3.connect('project.db')
 cur = db.cursor()
-# cur.execute("DROP TABLE Journal")
+
 cur.execute(""" CREATE TABLE IF NOT EXISTS Journal (
     title text NOT NULL,
     content text NOT NULL,
@@ -100,30 +98,27 @@ class AddEntry(tk.Frame):
         journal_entry = self.entry.get("1.0","end")
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        print("date and time =", dt_string)	
         db = sqlite3.connect('project.db')
         cur = db.cursor()
         cur.execute("SELECT id FROM User WHERE active = 1 ")
         activeid = cur.fetchall()
         act = activeid[0]
-        print(activeid)
         add_details = 'INSERT INTO Journal(title,content,datetime,userid) VALUES(?,?,?,?)'
         cur.execute(add_details, [(self.title.get()),(journal_entry),(dt_string),(act[0])])
         cur.execute("SELECT * from Journal")
         records = cur.fetchall()
-        print(records)
         db.commit()
         db.close()
         global root
         root.destroy()
         call(["python", "Journal.py"])
-       # controller.show_frame(ViewEntries)
+       
     
 
 
 
 class ViewEntries(tk.Frame):
-    # list1=[]
+    
     def __init__(self,parent,controller):
         tk.Frame.__init__(self,parent)
         
@@ -139,11 +134,14 @@ class ViewEntries(tk.Frame):
         edit_entry_btn=ttk.Button(change_label,width=10,text="Edit", command=lambda: self.update(list_box,list1))
         edit_entry_btn.grid(row=0,column=1,padx=2)
 
-        # delete_entry_btn=ttk.Button(change_label,width=10,text="Delete")
-        # delete_entry_btn.grid(row=0,column=2,padx=2)
+        np_btn=ttk.Button(change_label,width=13,text="Go to Notepad",command=self.get_notepad)
+        np_btn.grid(row=0,column=3,padx=2)
+
+        paint_btn=ttk.Button(change_label,width=10,text="Go to Paint",command=self.get_paint)
+        paint_btn.grid(row=0,column=4,padx=2)
 
         logout_btn=ttk.Button(change_label,width=10,text="Log Out",command=self.logout)
-        logout_btn.grid(row=0,column=3,padx=2)
+        logout_btn.grid(row=0,column=5,padx=2)
 
         space=ttk.Label(self,text="",background="white")
 
@@ -159,12 +157,10 @@ class ViewEntries(tk.Frame):
         cur.execute("SELECT id FROM User WHERE active = 1 ")
         activeid = cur.fetchall()
         act = activeid[0]
-        # print(activeid)
-        # print(act)
+        
         get_title=("SELECT entryid,title,content,datetime FROM Journal WHERE userid = ? ")
         cur.execute(get_title,act)
         titles=cur.fetchall()
-        print(titles)
         for title1 in titles:
             list2=[]
             for i in range(4):
@@ -174,18 +170,14 @@ class ViewEntries(tk.Frame):
                 list2.append(title1[3])
             list1.append(list2)
 
- #      print(list1)
+ 
         cur.execute("SELECT * from Journal")
         records = cur.fetchall()
-        print(records)
         self.update_view(list1,list_box)
         cur.execute("SELECT * from Journal")
-        print("should print journal")
         records = cur.fetchall()
-        print(records)
         db.commit()
         db.close()
-        print("heyy")
         delete_entry_btn=ttk.Button(change_label,width=10,text="Delete",command=lambda: self.delete(list_box,list1))
         delete_entry_btn.grid(row=0,column=2,padx=2)
 
@@ -199,6 +191,17 @@ class ViewEntries(tk.Frame):
             list_box.insert("end",entry[3]) 
             i+=1           
 
+
+    def get_notepad(self):
+        global root
+        root.destroy()
+        call(["python", "Notepad.py"])
+
+    def get_paint(self):
+        global root
+        root.destroy()
+        call(["python", "Paint.py"])
+
     def logout(self):
         db = sqlite3.connect('project.db')
         cur = db.cursor()
@@ -211,27 +214,16 @@ class ViewEntries(tk.Frame):
         call(["python", "startApp.py"])
 
     def delete(self,list_box,list1):
-#        pass
+
         del_title_index=list_box.curselection()
-        # del_title=int(del_title)
-        print("sjdsjdsjdhsjh")
-        print(del_title_index)
         del_title_index1=int(del_title_index[0]/4)
         del_title=list1[del_title_index1][0]
-        print(del_title)
-        # del_title1=del_title.split()
-        # print(del_title1)
         tup1=()
         tup2=()
         tup3=()
         tup1=tup1+(del_title_index[0]+1,)
         tup2=tup2+((del_title_index[0]+2),)
         tup3=tup3+((del_title_index[0]+3),) 
-        print(tup1) 
-        print(tup2)
-        print(tup3)
-        # print(len(del_title))
-        # print(len((del_title,)))
         if del_title_index:
             list_box.delete(tup3)
             list_box.delete(tup2)
@@ -250,20 +242,14 @@ class ViewEntries(tk.Frame):
 
     def update(self, list_box,list1):
         upd_title_index=list_box.curselection()
-        print(upd_title_index, "upd_title_index")
         upd_title_index1=int(upd_title_index[0]/4)
-        print(upd_title_index1, "upd_title_index1")
         upd_title=list1[upd_title_index1][0]
-        print(upd_title, "upd_title")
         db = sqlite3.connect('project.db')
         cur = db.cursor()
-        upd_entry=("SELECT * FROM Journal WHERE title=?")
-        cur.execute(upd_entry,(upd_title,))
+        upd_entry=("SELECT * FROM Journal WHERE entryid=?")
+        cur.execute(upd_entry,(upd_title, ))
         entries = cur.fetchall()
-        print(entries)
         entry_list = entries[0]
-        #create separate dialog box
-        
         db.commit()
         db.close()
         onClick(entry_list)
@@ -305,29 +291,22 @@ class MyDialog:
         cur = db.cursor()
         title_data = self.title.get("1.0","end")
         entry_data = self.entry.get("1.0","end")
-        print(title_data, entry_data)
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         add_details = 'UPDATE Journal set title=?,content=?,datetime=?,userid=? WHERE entryid = ?'
         cur.execute(add_details, [(title_data),(entry_data),(dt_string),(self.entry_list[3]),(self.entry_list[4])])
         cur.execute("SELECT * from Journal")
         records = cur.fetchall()
-        print(records)
         db.commit()
         db.close()
-        #print(self.entry_list)
         self.top.destroy()
 
 def onClick(entry_list):
     inputDialog = MyDialog(root,entry_list)
     root.wait_window(inputDialog.top)
-    #print(entry_list)
 
 
 root = JournalApp()
-#username = 'Empty'
-#mainButton = tk.Button(root, text='Click me', command=onClick)
-#mainButton.pack()
 root.title("Journal")
 root.geometry("500x500")
 root.mainloop()
