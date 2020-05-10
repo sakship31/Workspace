@@ -245,6 +245,8 @@ class ViewEntries(tk.Frame):
                 cur.execute(del_entry,(del_title,))
                 db.commit()
                 db.close()
+        else:
+            ms.showerror('Incorrect selection','Please select "Entry number" of the entry you wish to delete.')
 
 
     def update(self, list_box,list1):
@@ -264,6 +266,8 @@ class ViewEntries(tk.Frame):
             global root
             root.destroy()
             call(["python", "Journal.py"])
+        else:
+            ms.showerror('Incorrect selection','Please select "Entry number" of the entry you wish to edit.')
     
 
 class MyDialog:
