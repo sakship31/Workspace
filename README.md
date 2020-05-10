@@ -8,7 +8,7 @@ Thinking why it is called ‘Smart’, it’s because you can create , edit and 
 
 <p>
 For more details-
-<a href="">
+<a href="https://docs.google.com/document/d/1LdgY1ZZUIRn6PmGC436N0veKylZUyKWu4a_pkZJxp3c/edit?ts=5eb16a73#">
 Document link 
 </a>
 </p>
@@ -66,5 +66,5 @@ Install the dependencies by running:
 `Database` : Sqlite3 <br>
 `Frontend` : Tkinter(module of python)  <br>
 
-<h3 align="center"><b>Developed with :heart: by <a href="">Anina</a> ,<a href="">Jigyassa</a> and <a href="">Sakshi</a></b></h1>
+<h3 align="center"><b>Developed with :heart: by <a href="">Anina</a> ,<a href=""> Jigyassa</a> and <a href="">Sakshi</a></b></h1>
 
