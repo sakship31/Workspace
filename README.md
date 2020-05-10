@@ -32,8 +32,9 @@ You can secure your work with passwords to restrict access.
 
 3)Paint : With the Paint feature of Workspace, you can easily make drawings and save them.
 
-4)Journal: Often we want to keep a track of our records, so there comes the use of the Journal application.
-You can easily maintain a record of your work, add new records, delete, edit and keep them private (user-login specific).
+4)Journal: Often we want to keep a track of our records so there comes the use of journal application.You can easily maintain 
+a record of your work, add new records, delete, edit and keep them private(user login specific).
+
 ----------------------------------------------------------------------------------------
 ### Login ###
 ![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Login.PNG)
