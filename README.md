@@ -11,8 +11,8 @@
 
 ## Description ##
 
-Workspace is a smart 3 in one Desktop Application built using Python..
-Thinking why it is called ‘Smart’, it’s because you can create , edit and paint at one place.
+Workspace is a 3 in one Desktop Application built using Python.
+You can create, edit files, also maintain user specific(login based) work and paint with various app specific featuresat one place.
 
 <p>
 For more details-
@@ -22,18 +22,23 @@ User Manual link
 </p>
 
 ## Features ##
-Workspace also allows you to do a lot of new things.
+Workspace has following features-
 
-1)Login/Register:You can store all your documents and other related work at one place i.e. your account.
-With Workspace , you can easily create an account for free and store all your things at one place.
+1)Login/Register: With login/register feature, the personal work can be stored in Journal app. So that each user can have their
+work(records) in the app which can be edited or deleted by them.With Workspace , you can easily create an account for free 
+and store all your things at one place.
 
-2)Encryption/Decryption : Want to keep your work private? Workspace allows you to easily do that with the Encryption feature.
-You can secure your work with passwords to restrict access.
+2)Paint : With the Paint feature of Workspace, you can easily make drawings and save them.
 
-3)Paint : With the Paint feature of Workspace, you can easily make drawings and save them.
-
-4)Journal: Often we want to keep a track of our records so there comes the use of journal application.You can easily maintain 
+3)Journal: Often we want to keep a track of our records so there comes the use of journal application.You can easily maintain 
 a record of your work, add new records, delete, edit and keep them private(user login specific).
+
+4)Notepad: This is a basic text editor with all necessary feature to edit and save your files and format them.It has an additional 
+feature to kepp the file content encrypted to avoid others read it when file is saved locally. It can be decrypted later on by 
+providing same password as given while encrypting.
+
+5)Encryption/Decryption : Workspace allows you to easily keep your work private with the Encryption feature.
+You can secure your work with passwords to restrict access to your data which can be decrypted by the same password.
 
 ----------------------------------------------------------------------------------------
 ### Login ###
