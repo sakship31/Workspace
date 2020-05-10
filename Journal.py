@@ -145,12 +145,18 @@ class ViewEntries(tk.Frame):
 
         space=ttk.Label(self,text="",background="white")
 
-        scroll_bar=tk.Scrollbar(self)
+        scroll_bary=tk.Scrollbar(self)
+        scroll_barx=tk.Scrollbar(self,orient="horizontal")
         list_box=tk.Listbox(self)
-        scroll_bar.pack(side=tk.RIGHT,fill=tk.Y)
+        list_box.config(yscrollcommand=scroll_bary.set)
+        list_box.config(xscrollcommand=scroll_barx.set)
+        scroll_bary.config(command=list_box.yview)
+        scroll_barx.config(command=list_box.xview)
+        scroll_bary.pack(side=tk.RIGHT,fill=tk.Y)
         list_box.pack(fill=tk.BOTH,expand=True)
-        scroll_bar.config(command=list_box.yview)
-        list_box.config(yscrollcommand=scroll_bar.set)
+        scroll_barx.pack(side=tk.BOTTOM,fill=tk.X)
+        # list_box.pack(fill=tk.BOTH,side=tk.LEFT)
+
         list1=[]
         db = sqlite3.connect('project.db')
         cur = db.cursor()
