@@ -104,9 +104,9 @@ class main():
         Button(self.crf,text = 'Go to Login',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.log).grid(row=3,column=1)
 
         self.menu = Frame(self.master,padx =10,pady = 10)
-        Button(self.menu,text = 'Journal',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.journal).grid(row=0,column=0,padx=6)
-        Button(self.menu,text = 'Paint',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.paint).grid(row=0,column=1,padx=6)
-        Button(self.menu,text = 'Notepad',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.notepad).grid(row=0,column=2,padx=6)
+        Button(self.menu,text = 'Journal',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.journal).grid(row=0,column=0,padx=9)
+        Button(self.menu,text = 'Paint',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.paint).grid(row=0,column=1,padx=9)
+        Button(self.menu,text = 'Notepad',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.notepad).grid(row=0,column=2,padx=9)
 
     def notepad(self):
         global root
@@ -121,6 +121,12 @@ class main():
 
     def paint(self):
         global root
+        db = sqlite3.connect('project.db')
+        cur = db.cursor()
+        active_true = """Update User set active = 1 where username=? AND password=?"""
+        cur.execute(active_true,[(self.username.get()),(self.password.get())])
+        db.commit()
+        db.close()
         root.destroy()
         call(["python", "Paint.py"])
 

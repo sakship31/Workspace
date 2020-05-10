@@ -250,8 +250,11 @@ class ViewEntries(tk.Frame):
 
     def update(self, list_box,list1):
         upd_title_index=list_box.curselection()
-        upd_title=list1[upd_title_index[0]]
-        print(upd_title)
+        print(upd_title_index, "upd_title_index")
+        upd_title_index1=int(upd_title_index[0]/4)
+        print(upd_title_index1, "upd_title_index1")
+        upd_title=list1[upd_title_index1][0]
+        print(upd_title, "upd_title")
         db = sqlite3.connect('project.db')
         cur = db.cursor()
         upd_entry=("SELECT * FROM Journal WHERE title=?")
