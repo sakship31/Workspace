@@ -1,6 +1,5 @@
 <h1 align = 'center'>WORKSPACE: A THREE IN ONE APPLICATION</h1>
-<br><br>
-
+<br>
 ## Description ##
 
 Workspace is a smart 3 in one Desktop Application built using Python..
