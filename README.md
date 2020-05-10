@@ -9,12 +9,12 @@ Thinking why it is called ‘Smart’, it’s because you can create , edit and 
 <p>
 For more details-
 <a href="https://docs.google.com/document/d/1LdgY1ZZUIRn6PmGC436N0veKylZUyKWu4a_pkZJxp3c/edit?ts=5eb16a73#">
-Document link 
+User Manual link 
 </a>
 </p>
 
 ## Features ##
-Workspace also allows you to do a lot of new things .
+Workspace also allows you to do a lot of new things.
 
 1)Login/Register:You can store all your documents and other related work at one place i.e. your account.
 With Workspace , you can easily create an account for free and store all your things at one place.
