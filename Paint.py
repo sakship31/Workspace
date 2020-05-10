@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter import ttk
 from tkinter.colorchooser import askcolor
 from tkinter.filedialog import askopenfile,asksaveasfilename
 import io
@@ -15,33 +14,33 @@ class Paint(object):
     def __init__(self):
         self.root = Tk()
         self.root.title("Paint")
-        self.root.geometry("720x700")
-        self.save_button = ttk.Button(self.root,text = 'Save File', command = self.save_file)
+        
+        self.save_button = Button(self.root,text = 'Save File', command = self.save_file)
         self.save_button.grid(row=0,column=0, padx=4)
 
-        self.pen_button = ttk.Button(self.root,text = 'Clear Screen',command = self.clear_scr)
+        self.pen_button =Button(self.root,text = 'Clear Screen',command = self.clear_scr)
         self.pen_button.grid(row=0,column=1, padx=4)
        
-        self.brush_button = ttk.Button(self.root,text = 'Brush',command = self.use_brush)
+        self.brush_button = Button(self.root,text = 'Brush',command = self.use_brush)
         self.brush_button.grid(row=0,column=2, padx=4)
        
-        self.color_button = ttk.Button(self.root,text = 'Color',command = self.choose_color)
+        self.color_button = Button(self.root,text = 'Color',command = self.choose_color)
         self.color_button.grid(row=0,column=3, padx=4)
        
-        self.eraser_button = ttk.Button(self.root,text = 'Eraser',command = self.use_eraser)
+        self.eraser_button = Button(self.root,text = 'Eraser',command = self.use_eraser)
         self.eraser_button.grid(row=0,column=4, padx=4)
        
         self.choose_size_button = Scale(self.root,from_=1,to=25,orient = HORIZONTAL, sliderlength = 25)
         self.choose_size_button.grid(row=0,column=5, padx=4, ipady=6)
 
-        self.np_button = ttk.Button(self.root,text = 'Go to Notepad', command = self.note)
+        self.np_button = Button(self.root,text = 'Go to Notepad', command = self.note)
         self.np_button.grid(row=0,column=6, padx=4)
 
-        self.paint_button = ttk.Button(self.root,text = 'Go to Journal', command= self.journal)
+        self.paint_button = Button(self.root,text = 'Go to Journal', command= self.journal)
         self.paint_button.grid(row=0,column=7, padx=4)
        
         self.c = Canvas(self.root,bg = 'white',width=600,height=600)
-        self.c.grid(row =1,columnspan = 18)
+        self.c.grid(row =1,columnspan =8)
        
         self.image=Image.new("RGB",(200,200),(255,255,255))
         self.draw=ImageDraw.Draw(self.image)
@@ -111,3 +110,4 @@ class Paint(object):
 
 if __name__ == '__main__':
     Paint()
+
