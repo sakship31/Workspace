@@ -222,46 +222,48 @@ class ViewEntries(tk.Frame):
     def delete(self,list_box,list1):
 
         del_title_index=list_box.curselection()
-        del_title_index1=int(del_title_index[0]/4)
-        del_title=list1[del_title_index1][0]
-        tup1=()
-        tup2=()
-        tup3=()
-        tup1=tup1+(del_title_index[0]+1,)
-        tup2=tup2+((del_title_index[0]+2),)
-        tup3=tup3+((del_title_index[0]+3),) 
-        if del_title_index:
-            list_box.delete(tup3)
-            list_box.delete(tup2)
-            list_box.delete(tup1)
-            list_box.delete(del_title_index)            
-            db = sqlite3.connect('project.db')
-            cur = db.cursor()
-            cur.execute("SELECT id FROM User WHERE active = 1 ")
-            activeid = cur.fetchall()
-            act = activeid[0]
-            del_entry=("DELETE FROM Journal WHERE entryid=?")
-            cur.execute(del_entry,(del_title,))
-            db.commit()
-            db.close()
+        if ((del_title_index[0]%4)==0):
+            del_title_index1=int(del_title_index[0]/4)
+            del_title=list1[del_title_index1][0]
+            tup1=()
+            tup2=()
+            tup3=()
+            tup1=tup1+(del_title_index[0]+1,)
+            tup2=tup2+((del_title_index[0]+2),)
+            tup3=tup3+((del_title_index[0]+3),) 
+            if del_title_index:
+                list_box.delete(tup3)
+                list_box.delete(tup2)
+                list_box.delete(tup1)
+                list_box.delete(del_title_index)            
+                db = sqlite3.connect('project.db')
+                cur = db.cursor()
+                cur.execute("SELECT id FROM User WHERE active = 1 ")
+                activeid = cur.fetchall()
+                act = activeid[0]
+                del_entry=("DELETE FROM Journal WHERE entryid=?")
+                cur.execute(del_entry,(del_title,))
+                db.commit()
+                db.close()
 
 
     def update(self, list_box,list1):
         upd_title_index=list_box.curselection()
-        upd_title_index1=int(upd_title_index[0]/4)
-        upd_title=list1[upd_title_index1][0]
-        db = sqlite3.connect('project.db')
-        cur = db.cursor()
-        upd_entry=("SELECT * FROM Journal WHERE entryid=?")
-        cur.execute(upd_entry,(upd_title, ))
-        entries = cur.fetchall()
-        entry_list = entries[0]
-        db.commit()
-        db.close()
-        onClick(entry_list)
-        global root
-        root.destroy()
-        call(["python", "Journal.py"])
+        if((upd_title_index[0]%4)==0):
+            upd_title_index1=int(upd_title_index[0]/4)
+            upd_title=list1[upd_title_index1][0]
+            db = sqlite3.connect('project.db')
+            cur = db.cursor()
+            upd_entry=("SELECT * FROM Journal WHERE entryid=?")
+            cur.execute(upd_entry,(upd_title, ))
+            entries = cur.fetchall()
+            entry_list = entries[0]
+            db.commit()
+            db.close()
+            onClick(entry_list)
+            global root
+            root.destroy()
+            call(["python", "Journal.py"])
     
 
 class MyDialog:
