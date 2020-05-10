@@ -3,14 +3,15 @@ from tkinter import ttk
 from tkinter import font,colorchooser,filedialog,messagebox
 from tkinter.filedialog import askopenfile,asksaveasfilename
 import os
+import sys
+from subprocess import call
 from tkinter import simpledialog
-#For Encryption/Decryption
 from base64 import b64encode, b64decode
 import hashlib
 from Cryptodome.Cipher import AES
 from Cryptodome.Random import get_random_bytes
 import sqlite3
-#--
+
 main_app=tk.Tk()
 main_app.geometry("600x600")
 main_app.title("Notepad")
@@ -26,6 +27,15 @@ main_menu.add_cascade(label="Edit",menu=edit_menu)
 
 view_menu = tk.Menu(main_menu,tearoff=False)
 main_menu.add_cascade(label="View",menu=view_menu)
+
+theme_menu = tk.Menu(main_menu,tearoff=False)
+main_menu.add_cascade(label="Theme",menu=theme_menu)
+
+encryption_menu = tk.Menu(main_menu,tearoff=False)
+main_menu.add_cascade(label="Encryption",menu=encryption_menu)
+
+Goto_menu = tk.Menu(main_menu,tearoff=False)
+main_menu.add_cascade(label="Go To",menu=Goto_menu)
 
 show_toolbar=tk.BooleanVar()
 show_toolbar.set(True)
@@ -58,9 +68,6 @@ def hide_status_bar():
 view_menu.add_checkbutton(label="Tool Bar",offvalue=0,compound=tk.LEFT,variable=show_toolbar,command=hide_toolbar)
 view_menu.add_checkbutton(label="Status Bar",offvalue=0,compound=tk.LEFT,variable=show_status_bar,command=hide_status_bar)
 
-theme_menu = tk.Menu(main_menu,tearoff=False)
-main_menu.add_cascade(label="Theme",menu=theme_menu)
-
 color_dict={
     'Light Default':('#000000','#ffffff'),
     'Dark':('#c4c4c4','#2d2d2d')
@@ -89,8 +96,6 @@ font_box=ttk.Combobox(tool_bar_label,width=30,textvariable=font_family,state="re
 font_box["values"]=font_tuple
 font_box.current(font_tuple.index("Arial"))
 font_box.grid(row=0,column=0,padx=5,pady=5)
-
-#size
 
 size_variable=tk.IntVar()
 font_size=ttk.Combobox(tool_bar_label,width=20,textvariable=size_variable,state="readonly")
@@ -143,22 +148,6 @@ def open_file():
         text=text_url.read()
         text_editor.insert("1.0",text)
 
-# def save_file():
-#     global text_url
-#     try:
-#         if text_url:
-#             text_area_text = text_editor.get('1.0', 'end-1c')
-#             save_text = open(text_url, 'w')
-#             save_text.write(text_area_text)
-#             save_text.close()
-#         else:
-#             notepad_text=text_editor.get("1.0","end-1c")
-#             file=asksaveasfilename(title="Save",filetypes=[('text files','*.txt')],defaultextension = [('text files','*.txt')])
-#             with open(file,"w") as content:
-#                 content.write(notepad_text)
-#     except:
-#         return
-
 def save_file():
     notepad_text=text_editor.get("1.0","end-1c")
     file=asksaveasfilename(title="Save",filetypes=[('text files','*.txt')],defaultextension = [('text files','*.txt')])
@@ -169,7 +158,6 @@ def save_file():
 filemenu.add_command(label="New",compound=tk.LEFT,command=new_file)
 filemenu.add_command(label="Open",compound=tk.LEFT,command=open_file)
 filemenu.add_command(label="Save",compound=tk.LEFT,command=save_file)
-#filemenu.add_command(label="Save as",compound=tk.LEFT,command=saveas_file,accelerator="Ctrl+Alt+s")
 filemenu.add_command(label="Exit",compound=tk.LEFT,command=main_app.destroy)
 
 edit_menu.add_command(label="Copy",compound=tk.LEFT,command=lambda:text_editor.event_generate("<Control c>"))
@@ -307,7 +295,6 @@ def align_right():
 right_btn.configure(command=align_right)
 
 status_bar=ttk.Label(main_app,text="Status Bar",anchor=tk.N)
-#status_bar=ttk.Label(main_app, relief=tk.SUNKEN)
 status_bar.pack(side=tk.BOTTOM,fill=tk.X)
 
 text_change=False
@@ -322,8 +309,8 @@ def change_count(event=None):
     text_editor.edit_modified(False)
 
 text_editor.bind("<<Modified>>",change_count)
-#Anina
-#Creating DB for Encryption
+
+
 connect = sqlite3.connect('project.db')
 cur = connect.cursor()
 
@@ -339,7 +326,6 @@ cur.execute("""CREATE TABLE IF NOT EXISTS  EncryptionData (
 connect.commit()
 connect.close()
 
-#Encryption
 def encrypt():
     connect = sqlite3.connect('project.db')
     cur = connect.cursor()
@@ -393,7 +379,6 @@ def encrypt():
 def decrypt():
     key = simpledialog.askstring("Enter Password", "Please Enter a password for decryption")
     cipher_text=text_editor.get(1.0,"end-1c")
-    #Get values from db
     connect = sqlite3.connect('project.db')
     cur = connect.cursor()
     cur.execute("SELECT *, oid from EncryptionData")
@@ -422,16 +407,19 @@ def decrypt():
     return decrypted
     
 
-#Add Menu Item
-encryption_menu = tk.Menu(main_menu,tearoff=False)
-main_menu.add_cascade(label="Encryption",menu=encryption_menu)
-#Add Dropdown
 encryption_menu.add_command(label="Encrypt",compound=tk.LEFT,command=encrypt)
 encryption_menu.add_command(label="Decrypt",compound=tk.LEFT,command=decrypt)
 
+def open_journal():
+    main_app.destroy()
+    call(["python", "Journal.py"])
 
+def open_paint():
+    main_app.destroy()
+    call(["python", "Paint.py"])
 
-
+Goto_menu.add_command(label="Journal App",compound=tk.LEFT,command=open_journal)
+Goto_menu.add_command(label="Paint App",compound=tk.LEFT,command=open_paint)
 
 
 main_app.mainloop()

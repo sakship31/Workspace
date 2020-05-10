@@ -1,4 +1,6 @@
 from tkinter import *
+import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox as ms
 import sqlite3
 import os
@@ -87,8 +89,9 @@ class main():
         Entry(self.logf,textvariable = self.username,bd = 5,font = ('',15)).grid(row=0,column=1)
         Label(self.logf,text = 'Password: ',font = ('',12),pady=5,padx=5).grid(sticky = W)
         Entry(self.logf,textvariable = self.password,bd = 5,font = ('',15),show = '*').grid(row=1,column=1)
-        Button(self.logf,text = ' Login ',bd = 3 ,font = ('',12),padx=5,pady=5,command=self.login).grid()
-        Button(self.logf,text = ' Create Account ',bd = 3 ,font = ('',12),padx=5,pady=5,command=self.cr).grid(row=2,column=1)
+        Label(self.logf).grid(row=2,column=0)
+        Button(self.logf,text = ' Login ',bd = 3 ,font = ('',12),padx=5,pady=5,command=self.login).grid(row=3,column=0)
+        Button(self.logf,text = ' Create Account ',bd = 3 ,font = ('',12),padx=5,pady=5,command=self.cr).grid(row=3,column=1)
         self.logf.pack()
         
         self.crf = Frame(self.master,padx =10,pady = 10)
@@ -96,16 +99,23 @@ class main():
         Entry(self.crf,textvariable = self.new_username,bd = 5,font = ('',15)).grid(row=0,column=1)
         Label(self.crf,text = 'Password: ',font = ('',12),pady=5,padx=5).grid(sticky = W)
         Entry(self.crf,textvariable = self.new_password,bd = 5,font = ('',15),show = '*').grid(row=1,column=1)
-        Button(self.crf,text = 'Create Account',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.create_new_user).grid()
-        Button(self.crf,text = 'Go to Login',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.log).grid(row=2,column=1)
+        Label(self.crf).grid(row=2,column=0)
+        Button(self.crf,text = 'Create Account',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.create_new_user).grid(row=3,column=0)
+        Button(self.crf,text = 'Go to Login',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.log).grid(row=3,column=1)
 
         self.menu = Frame(self.master,padx =10,pady = 10)
-        Button(self.menu,text = 'Journal',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.journal).grid(row=0,column=0)
-        Button(self.menu,text = 'Paint',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.paint).grid(row=0,column=1)
-        Button(self.menu,text = 'Notepad',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.notepad).grid(row=0,column=2)
+        Button(self.menu,text = 'Journal',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.journal).grid(row=0,column=0,padx=6)
+        Button(self.menu,text = 'Paint',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.paint).grid(row=0,column=1,padx=6)
+        Button(self.menu,text = 'Notepad',bd = 5 ,font = ('',12),padx=8,pady=3,command=self.notepad).grid(row=0,column=2,padx=6)
 
     def notepad(self):
         global root
+        db = sqlite3.connect('project.db')
+        cur = db.cursor()
+        active_true = """Update User set active = 1 where username=? AND password=?"""
+        cur.execute(active_true,[(self.username.get()),(self.password.get())])
+        db.commit()
+        db.close()
         root.destroy()
         call(["python", "Notepad.py"])
 
@@ -142,11 +152,11 @@ class main():
     def show_menu(self):
         self.crf.pack_forget()
         self.logf.pack_forget()
-        self.head['text'] = self.username.get() + '\n Logged In'
+        self.head['text'] = 'Welcome ' + self.username.get() 
         self.menu.pack()
 
 root = Tk()
-root.geometry("400x350+350+150")
+root.geometry("500x300")
 root.title("Login Form")
 main(root)
 root.mainloop()

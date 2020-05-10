@@ -216,7 +216,7 @@ class ViewEntries(tk.Frame):
         # del_title=int(del_title)
         print("sjdsjdsjdhsjh")
         print(del_title_index)
-        del_title_index1=del_title_index[0]%4
+        del_title_index1=int(del_title_index[0]/4)
         del_title=list1[del_title_index1][0]
         print(del_title)
         # del_title1=del_title.split()

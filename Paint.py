@@ -1,6 +1,4 @@
 from tkinter import *
-import PIL
-from PIL import Image, ImageGrab, ImageTk, ImageDraw
 from tkinter.colorchooser import askcolor
 from tkinter.filedialog import askopenfile,asksaveasfilename
 import io
