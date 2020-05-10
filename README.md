@@ -28,6 +28,19 @@ You can secure your work with passwords to restrict access.
 You can easily maintain a record of your tasks, add new tasks, delete some and keep them private also as they are logged in your
 account only.
 
+## Links to Working Demo ##
+<a href="https://drive.google.com/open?id=1KhFHr0POrpcdDLyxmiYjFrjdDchQ2dEf">
+Notepad
+</a>
+<br>
+<a href="https://drive.google.com/file/d/1ZO24JblKM35Pim56SlFh658SjmF6Rlel/view?usp=sharing">
+Paint
+</a>
+<br>
+<a href="https://drive.google.com/open?id=1mzlh8hAd1YntmXnD1AnCVU5tID2fH7YJ">
+Journal 
+</a>
+<br>
 
 ## How To Use
 #### Software Requirements
@@ -55,10 +68,3 @@ Install the dependencies by running:
 
 <h3 align="center"><b>Developed with :heart: by <a href="">Anina</a> ,<a href="">Jigyassa</a> and <a href="">Sakshi</a></b></h1>
 
-Links to the working demo
-1.Notepad
-https://drive.google.com/open?id=1KhFHr0POrpcdDLyxmiYjFrjdDchQ2dEf
-2.Paint
-https://drive.google.com/file/d/1ZO24JblKM35Pim56SlFh658SjmF6Rlel/view?usp=sharing
-3.Journal
-https://drive.google.com/open?id=1mzlh8hAd1YntmXnD1AnCVU5tID2fH7YJ
