@@ -25,7 +25,7 @@ You can secure your work with passwords to restrict access.
 3)Paint : With the Paint feature of Workspace , you can easily store diagrams and edit them.
 
 4)Journal: Often we want to keep a track of our records, so there comes the use of the Journal application.
-You can easily maintain a record of your work, add new records, delete some and keep them private.
+You can easily maintain a record of your work, add new records, delete some and keep them private (user-login specific).
 
 ## Links to Working Demo ##
 <a href="https://drive.google.com/open?id=1KhFHr0POrpcdDLyxmiYjFrjdDchQ2dEf">
