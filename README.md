@@ -48,13 +48,14 @@ You can secure your work with passwords to restrict access to your data which ca
 ### Menu ###
 ![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Menu.PNG)
 ### Journal ###
+#### Each ENTRY can be deleted/edited and new ENTRY can be added. ####
 ![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Journal.PNG)
 ### Paint ###
 ![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Paint.PNG)
 ### Notepad ###
 ![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Notepad.PNG)
 ---------------------------------------------------------------------------------------
-## Links to Working Demo ##
+## Links to Working Demo(for all the features of each section of application) ##
 <a href="https://drive.google.com/open?id=1KhFHr0POrpcdDLyxmiYjFrjdDchQ2dEf">
 Notepad
 </a>
