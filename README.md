@@ -66,5 +66,5 @@ Install the dependencies by running:
 `Database` : Sqlite3 <br>
 `Frontend` : Tkinter(module of python)  <br>
 
-<h3 align="center"><b>Developed with :heart: by <a href="">Anina</a> ,<a href=""> Jigyassa</a> and <a href="https://github.com/sakship31/">Sakshi</a></b></h1>
+<h3 align="center"><b>Developed with :heart: by <a href="https://github.com/anina512">Anina</a> ,<a href=""> Jigyassa</a> and <a href="https://github.com/sakship31/">Sakshi</a></b></h1>
 
