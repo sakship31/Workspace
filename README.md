@@ -1,4 +1,3 @@
-
 </p>
 <h1 align = 'center'>WORKSPACE: A THREE IN ONE APPLICATION</h1>
 <br>
@@ -33,10 +32,23 @@ You can secure your work with passwords to restrict access.
 
 3)Paint : With the Paint feature of Workspace, you can easily make drawings and save them.
 
-4)Journal: Often we want to keep a track of our records, so there comes the use of the Journal application.
-You can easily maintain a record of your work, add new records, delete, edit and keep them private (user-login specific).
+4)Journal: Often we want to keep a track of our records so there comes the use of journal application.You can easily maintain 
+a record of your work, add new records, delete, edit and keep them private(user login specific).
 
-
+----------------------------------------------------------------------------------------
+### Login ###
+![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Login.PNG)
+### Sign up ###
+![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/sign.PNG)
+### Menu ###
+![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Menu.PNG)
+### Journal ###
+![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Journal.PNG)
+### Paint ###
+![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Paint.PNG)
+### Notepad ###
+![](https://github.com/sakship31/Workspace/blob/master/Photos_Videos/Notepad.PNG)
+---------------------------------------------------------------------------------------
 ## Links to Working Demo ##
 <a href="https://drive.google.com/open?id=1KhFHr0POrpcdDLyxmiYjFrjdDchQ2dEf">
 Notepad
