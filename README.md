@@ -78,7 +78,7 @@ Ghostscript
 Install the dependencies by running:
 ```html  
     pip install pillow
-    (This library add suport for saving images. Necessary in order to run Paint app.)
+    (This library adds suport for saving images. Necessary in order to run Paint app.)
     pip3 install pycryptodomex
     (Necessary for encryption feature to function)
     pip install ghostscript
