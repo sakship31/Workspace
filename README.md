@@ -12,7 +12,7 @@
 ## Description ##
 
 Workspace is a 3 in one Desktop Application built using Python.
-You can create, edit files, also maintain user specific(login based) work and paint with various app specific featuresat one place.
+You can create, edit files, also maintain user specific(login based) work and paint with various app specific features at one place.
 
 <p>
 For more details-
